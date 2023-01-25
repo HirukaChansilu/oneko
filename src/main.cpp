@@ -16,5 +16,6 @@ void loop()
   // oneko.sleep();
   // oneko.face(32);
   // oneko.go_to_sleep();
-  oneko.move(2);
+  // oneko.move(2);
+  oneko.wave();
 }

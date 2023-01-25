@@ -1690,3 +1690,8 @@ void Oneko::move(int direction, int frame_duration)
         break;
     }
 }
+
+void Oneko::wave(int frame_duration)
+{
+    animate(23, 24, frame_duration);
+}
