@@ -15,5 +15,6 @@ void loop()
   // oneko.scratch_ears();
   // oneko.sleep();
   // oneko.face(32);
-  oneko.go_to_sleep();
+  // oneko.go_to_sleep();
+  oneko.move(2);
 }

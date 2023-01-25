@@ -1577,6 +1577,28 @@ void Oneko::init()
     display.clearDisplay();
 }
 
+void Oneko::animate(int frame1, int frame2, int frame_duration)
+{
+    static long current_millis, pre_millis = 0;
+    static bool show_frame1 = true;
+
+    current_millis = millis();
+
+    if (current_millis - pre_millis >= frame_duration)
+    {
+        if (show_frame1)
+        {
+            face(frame1);
+        }
+        else
+        {
+            face(frame2);
+        }
+        show_frame1 = !show_frame1;
+        pre_millis = millis();
+    }
+}
+
 void Oneko::face(int face)
 {
     display.clearDisplay();
@@ -1586,46 +1608,12 @@ void Oneko::face(int face)
 
 void Oneko::scratch_ears(int frame_duration)
 {
-    static long current_millis, pre_millis = 0;
-    static bool frame1 = true;
-
-    current_millis = millis();
-
-    if (current_millis - pre_millis >= frame_duration)
-    {
-        if (frame1)
-        {
-            face(19);
-        }
-        else
-        {
-            face(20);
-        }
-        frame1 = !frame1;
-        pre_millis = millis();
-    }
+    animate(19, 20, frame_duration);
 }
 
 void Oneko::sleep(int frame_duration)
 {
-    static long current_millis, pre_millis = 0;
-    static bool frame1 = true;
-
-    current_millis = millis();
-
-    if (current_millis - pre_millis >= frame_duration)
-    {
-        if (frame1)
-        {
-            face(21);
-        }
-        else
-        {
-            face(22);
-        }
-        frame1 = !frame1;
-        pre_millis = millis();
-    }
+    animate(21, 22, frame_duration);
 }
 
 void Oneko::go_to_sleep(int yawn_duration, int scratch_ears_duration)
@@ -1655,5 +1643,50 @@ void Oneko::go_to_sleep(int yawn_duration, int scratch_ears_duration)
     else
     {
         sleep();
+    }
+}
+
+void Oneko::move(int direction, int frame_duration)
+{
+    switch (direction)
+    {
+    case 0:
+        face(17);
+        break;
+
+    case 1:
+        animate(1, 2, frame_duration);
+        break;
+
+    case 2:
+        animate(3, 4, frame_duration);
+        break;
+
+    case 3:
+        animate(5, 6, frame_duration);
+        break;
+
+    case 4:
+        animate(7, 8, frame_duration);
+        break;
+
+    case 5:
+        animate(9, 10, frame_duration);
+        break;
+
+    case 6:
+        animate(11, 12, frame_duration);
+        break;
+
+    case 7:
+        animate(13, 14, frame_duration);
+        break;
+
+    case 8:
+        animate(15, 16, frame_duration);
+        break;
+
+    default:
+        break;
     }
 }

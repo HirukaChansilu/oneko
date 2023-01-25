@@ -16,6 +16,7 @@ class Oneko
 {
 private:
     Adafruit_SSD1306 display = Adafruit_SSD1306(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+    void animate(int frame1, int frame2, int frame_duration);
 
 public:
     void init();
@@ -23,6 +24,7 @@ public:
     void scratch_ears(int frame_duration = 75);
     void sleep(int frame_duration = 400);
     void go_to_sleep(int yawn_duration = 1200, int scratch_ears_duration = 4000);
+    void move(int direction, int frame_duration = 100);
 };
 
 #endif
