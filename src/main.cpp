@@ -5,12 +5,15 @@ Oneko oneko = Oneko();
 
 void setup()
 {
-  Serial.begin(9600);
+  // Serial.begin(9600);
 
   oneko.init();
-  oneko.face(26);
 }
 
 void loop()
 {
+  // oneko.scratch_ears();
+  // oneko.sleep();
+  // oneko.face(32);
+  oneko.go_to_sleep();
 }

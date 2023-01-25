@@ -20,6 +20,9 @@ private:
 public:
     void init();
     void face(int face);
+    void scratch_ears(int frame_duration = 75);
+    void sleep(int frame_duration = 400);
+    void go_to_sleep(int yawn_duration = 1200, int scratch_ears_duration = 4000);
 };
 
 #endif
