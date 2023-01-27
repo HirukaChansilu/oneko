@@ -2,6 +2,10 @@
 
 Little cute cat and the cat start chasing around your mouse cursor on Linux/Unix. But on OLED Display.
 
+### How?
+
+- Make the device vertically or horizontally aligned to the ground. Tilt it and the neko moves towards the tilted direction. When staying it sleeps and waves at you at random times.
+
 ## Positioning
 
 |              8               |              1               |              2              |
@@ -22,3 +26,7 @@ Little cute cat and the cat start chasing around your mouse cursor on Linux/Unix
 | `-y` |    3     |     3      |
 | `+z` |   `g↓`   |     1      |
 | `-z` |    -     |     5      |
+
+<hr>
+
+Copyright Hiruka Chansilu ©2023
