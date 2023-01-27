@@ -8,8 +8,10 @@ void Accelerometer::init()
     if (!mpu.begin())
     {
         Serial.println("Failed to find MPU6050 chip");
+        is_init = false;
     }
     Serial.println("Accelerometer Initialized correctly!");
+    is_init = true;
 
     mpu.setAccelerometerRange(MPU6050_RANGE_8_G);
     mpu.setFilterBandwidth(MPU6050_BAND_21_HZ);

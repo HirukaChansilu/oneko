@@ -17,15 +17,23 @@ void setup()
 
 void loop()
 {
-  if (oneko.continue_with_error())
+  if (accelerometer.is_init)
   {
+
     if (accelerometer.check_orientation())
     {
       oneko.move(accelerometer.get_direction());
     }
     else
     {
-      Serial.println("Not in orientation");
+      oneko.not_oriented();
+    }
+  }
+  else
+  {
+    if (oneko.continue_with_error())
+    {
+      oneko.sleep();
     }
   }
 }

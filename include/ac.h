@@ -12,6 +12,7 @@ private:
     bool is_vertical();
 
 public:
+    bool is_init = false;
     void init();
     bool check_orientation();
     int get_direction();
