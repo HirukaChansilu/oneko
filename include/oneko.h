@@ -17,6 +17,7 @@ class Oneko
 private:
     Adafruit_SSD1306 display = Adafruit_SSD1306(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
     bool is_moving;
+    bool new_sleep = true;
     void animate(int frame1,
                  int frame2,
                  int frame_duration);
@@ -34,9 +35,9 @@ public:
         long wave_duration_offset = 2000,
         long sleep_duration_offset = 30000,
         long avg_wave_frequency = 20000,
-        long avg_sleep_frequency = 10000,
-        long wave_frequency_offset = 2000,
-        long sleep_frequency_offset = 5000);
+        long avg_sleep_frequency = 30000,
+        long wave_frequency_offset = 10000,
+        long sleep_frequency_offset = 20000);
     void go_to_sleep(int yawn_duration = 1200,
                      int scratch_ears_duration = 4000);
     void move(int direction, int frame_duration = 100);
@@ -44,3 +45,13 @@ public:
 };
 
 #endif
+
+// void stay(
+//     long avg_wave_duration = 5000,
+//     long avg_sleep_duration = 60000,
+//     long wave_duration_offset = 2000,
+//     long sleep_duration_offset = 30000,
+//     long avg_wave_frequency = 20000,
+//     long avg_sleep_frequency = 10000,
+//     long wave_frequency_offset = 2000,
+//     long sleep_frequency_offset = 5000);

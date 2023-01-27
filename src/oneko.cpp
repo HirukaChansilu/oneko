@@ -2335,6 +2335,8 @@ void Oneko::stay(
         is_sleep = false;
         wave_pre = millis();
         sleep_pre = millis();
+        new_sleep = true;
+        sleep_frequency = 3000;
 
         is_moving = false;
     }
@@ -2345,6 +2347,7 @@ void Oneko::stay(
         {
             is_wave = false;
             wave_pre = millis();
+            sleep_pre = millis();
         }
     }
     else
@@ -2379,7 +2382,19 @@ void Oneko::stay(
             }
             wave_duration_pre = millis();
         }
+    }
 
+    if (is_sleep)
+    {
+        if (sleep_duration_current - sleep_duration_pre >= sleep_duration)
+        {
+            is_sleep = false;
+            sleep_pre = millis();
+            wave_pre = millis();
+        }
+    }
+    else
+    {
         if (sleep_current - sleep_pre >= sleep_frequency)
         {
             if (!is_wave)
@@ -2412,6 +2427,11 @@ void Oneko::stay(
         }
     }
 
+    if (!is_sleep)
+    {
+        new_sleep = true;
+    }
+
     if (!(is_sleep || is_wave))
         face(17);
     else if (is_wave)
@@ -2429,10 +2449,19 @@ void Oneko::go_to_sleep(int yawn_duration, int scratch_ears_duration)
     static long
         current_millis,
         pre_millis = millis();
+
     static bool is_yawn = true,
                 is_scratch_ears = false;
 
     current_millis = millis();
+
+    if (new_sleep)
+    {
+        is_yawn = true;
+        is_scratch_ears = false;
+        pre_millis = millis();
+        new_sleep = false;
+    }
 
     if (is_yawn)
     {
@@ -2441,6 +2470,7 @@ void Oneko::go_to_sleep(int yawn_duration, int scratch_ears_duration)
         {
             is_yawn = false;
             is_scratch_ears = true;
+            pre_millis = millis();
         }
     }
     else if (is_scratch_ears)
