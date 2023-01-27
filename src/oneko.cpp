@@ -2389,6 +2389,7 @@ void Oneko::stay(
         if (sleep_duration_current - sleep_duration_pre >= sleep_duration)
         {
             is_sleep = false;
+            wave_frequency = random(2000, 5000);
             sleep_pre = millis();
             wave_pre = millis();
         }
