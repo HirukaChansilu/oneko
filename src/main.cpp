@@ -1,8 +1,8 @@
 #include <Arduino.h>
-// #include "oneko.h"
+#include "oneko.h"
 #include "ac.h"
 
-// Oneko oneko = Oneko();
+Oneko oneko = Oneko();
 Accelerometer accelerometer = Accelerometer();
 
 void setup()
@@ -11,25 +11,21 @@ void setup()
 
   delay(100);
 
-  // oneko.init();
+  oneko.init();
   accelerometer.init();
 }
 
 void loop()
 {
-  // oneko.scratch_ears();
-  // oneko.sleep();
-  // oneko.face(32);
-  // oneko.go_to_sleep();
-  // oneko.move(2);
-  // oneko.wave();
-  if (accelerometer.check_orientation())
+  if (oneko.continue_with_error())
   {
-    // Serial.print("Direction: ");
-    // Serial.println(accelerometer.get_direction());
-  }
-  else
-  {
-    Serial.println("Not in orientation");
+    if (accelerometer.check_orientation())
+    {
+      oneko.move(accelerometer.get_direction());
+    }
+    else
+    {
+      Serial.println("Not in orientation");
+    }
   }
 }

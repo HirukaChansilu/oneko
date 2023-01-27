@@ -1,18 +1,15 @@
 #include "ac.h"
 
-#define G_SLIDE_VALUE 7.00
+#define G_SLIDE_VALUE 6.50
 #define SLIDE_VALUE 1.50
 
 void Accelerometer::init()
 {
-    // Try to initialize!
     if (!mpu.begin())
     {
         Serial.println("Failed to find MPU6050 chip");
-        for (;;)
-            ;
     }
-    Serial.println("MPU6050 Found!");
+    Serial.println("Accelerometer Initialized correctly!");
 
     mpu.setAccelerometerRange(MPU6050_RANGE_8_G);
     mpu.setFilterBandwidth(MPU6050_BAND_21_HZ);
