@@ -2156,8 +2156,11 @@ void Oneko::init()
 
 bool Oneko::continue_with_error(int warning_duration)
 {
-    static bool show_error = true, frame1 = true;
-    static long current_millis, pre_millis = millis();
+    static bool show_error = true,
+                frame1 = true;
+    static long
+        current_millis,
+        pre_millis = millis();
 
     if (show_error)
     {
@@ -2199,7 +2202,9 @@ bool Oneko::continue_with_error(int warning_duration)
 void Oneko::not_oriented(int frame_duration)
 {
     static int frame = 1;
-    static long current_millis, pre_millis = millis();
+    static long
+        current_millis,
+        pre_millis = millis();
     static bool reverse = false;
 
     static char text[71] = "      Position the Device Vertically or Horizontal to the Ground      ";
@@ -2253,7 +2258,9 @@ void Oneko::not_oriented(int frame_duration)
 
 void Oneko::animate(int frame1, int frame2, int frame_duration)
 {
-    static long current_millis, pre_millis = millis();
+    static long
+        current_millis,
+        pre_millis = millis();
     static bool show_frame1 = true;
 
     current_millis = millis();
@@ -2290,10 +2297,140 @@ void Oneko::sleep(int frame_duration)
     animate(21, 22, frame_duration);
 }
 
+void Oneko::stay(
+    long avg_wave_duration,
+    long avg_sleep_duration,
+    long wave_duration_offset,
+    long sleep_duration_offset,
+    long avg_wave_frequency,
+    long avg_sleep_frequency,
+    long wave_frequency_offset,
+    long sleep_frequency_offset)
+{
+    static bool is_sleep = false,
+                is_wave = false;
+    static int wave_duration = avg_wave_duration,
+               sleep_duration = avg_sleep_duration,
+               wave_frequency = avg_wave_frequency,
+               sleep_frequency = avg_sleep_frequency;
+
+    static long
+        wave_current,
+        sleep_current,
+        wave_pre = millis(),
+        sleep_pre = millis(),
+        wave_duration_current,
+        sleep_duration_current,
+        wave_duration_pre,
+        sleep_duration_pre;
+
+    wave_current = millis();
+    sleep_current = millis();
+    wave_duration_current = millis();
+    sleep_duration_current = millis();
+
+    if (is_moving)
+    {
+        is_wave = false;
+        is_sleep = false;
+        wave_pre = millis();
+        sleep_pre = millis();
+
+        is_moving = false;
+    }
+
+    if (is_wave)
+    {
+        if (wave_duration_current - wave_duration_pre >= wave_duration)
+        {
+            is_wave = false;
+            wave_pre = millis();
+        }
+    }
+    else
+    {
+        if (wave_current - wave_pre >= wave_frequency)
+        {
+            if (!is_sleep)
+            {
+                is_wave = true;
+
+                randomSeed(millis());
+                bool positive_duration = random(2);
+                bool positive_frequency = random(2);
+
+                if (positive_duration)
+                {
+                    wave_duration = avg_wave_duration + random(wave_duration_offset + 1);
+                }
+                else
+                {
+                    wave_duration = avg_wave_duration - random(wave_duration_offset + 1);
+                }
+
+                if (positive_frequency)
+                {
+                    wave_frequency = avg_wave_frequency + random(wave_frequency_offset + 1);
+                }
+                else
+                {
+                    wave_frequency = avg_wave_frequency - random(wave_frequency_offset + 1);
+                }
+            }
+            wave_duration_pre = millis();
+        }
+
+        if (sleep_current - sleep_pre >= sleep_frequency)
+        {
+            if (!is_wave)
+            {
+                is_sleep = true;
+
+                randomSeed(millis());
+                bool positive_duration = random(2);
+                bool positive_frequency = random(2);
+
+                if (positive_duration)
+                {
+                    sleep_duration = avg_sleep_duration + random(sleep_duration_offset + 1);
+                }
+                else
+                {
+                    sleep_duration = avg_sleep_duration - random(sleep_duration_offset + 1);
+                }
+
+                if (positive_frequency)
+                {
+                    sleep_frequency = avg_sleep_frequency + random(sleep_frequency_offset + 1);
+                }
+                else
+                {
+                    sleep_frequency = avg_sleep_frequency - random(sleep_frequency_offset + 1);
+                }
+            }
+            sleep_duration_pre = millis();
+        }
+    }
+
+    if (!(is_sleep || is_wave))
+        face(17);
+    else if (is_wave)
+    {
+        wave();
+    }
+    else
+    {
+        go_to_sleep();
+    }
+}
+
 void Oneko::go_to_sleep(int yawn_duration, int scratch_ears_duration)
 {
-    static long current_millis, pre_millis = millis();
-    static bool is_yawn = true, is_scratch_ears = false;
+    static long
+        current_millis,
+        pre_millis = millis();
+    static bool is_yawn = true,
+                is_scratch_ears = false;
 
     current_millis = millis();
 
@@ -2322,10 +2459,15 @@ void Oneko::go_to_sleep(int yawn_duration, int scratch_ears_duration)
 
 void Oneko::move(int direction, int frame_duration)
 {
+    if (direction != 0)
+    {
+        is_moving = true;
+    }
+
     switch (direction)
     {
     case 0:
-        face(17);
+        stay();
         break;
 
     case 1:
